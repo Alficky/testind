@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jadwal Pelajaran - FNATIC CLASS</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #0047FF; 
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      color: #ffffff;
+    }
+
+    .navbar {
+      background-color: #000000;
+      color: #ffffff;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .menu-icon {
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    .nav-title {
+      font-weight: bold;
+      font-size: 15px;
+      text-transform: uppercase;
+    }
+
+    #toggle-menu { display: none; }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -260px;
+      width: 250px;
+      height: 100%;
+      background-color: #000000;
+      transition: left 0.3s ease;
+      z-index: 1000;
+      padding-top: 10px;
+    }
+
+    .close-btn {
+      color: #ffffff;
+      font-size: 28px;
+      padding: 10px 20px;
+      cursor: pointer;
+      display: inline-block;
+    }
+
+    .sidebar-menu {
+      list-style: none;
+      padding: 10px 0;
+    }
+
+    .sidebar-menu li a {
+      display: block;
+      padding: 14px 24px;
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .sidebar-menu li a.active, 
+    .sidebar-menu li a:hover {
+      background-color: #1a1a1a;
+    }
+
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+    }
+
+    #toggle-menu:checked ~ .sidebar { left: 0; }
+    #toggle-menu:checked ~ .overlay { display: block; }
+
+    .header-title {
+      text-align: center;
+      padding: 25px 15px 10px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header-title h1 {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .header-title p {
+      font-size: 13px;
+      opacity: 0.9;
+    }
+
+    .jadwal-container {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      padding: 15px 15px 40px;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .day-card {
+      background: #ffffff;
+      color: #1a1a1a;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    }
+
+    .day-title {
+      display: inline-block;
+      background-color: #000000;
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: bold;
+      padding: 6px 14px;
+      border-radius: 20px;
+      margin-bottom: 15px;
+      letter-spacing: 1px;
+    }
+
+    .mapel-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .mapel-item {
+      border-left: 4px solid #0047FF;
+      padding-left: 12px;
+    }
+
+    .jam-badge {
+      font-size: 11px;
+      font-weight: bold;
+      color: #0047FF;
+      margin-bottom: 2px;
+    }
+
+    .nama-mapel {
+      font-size: 15px;
+      font-weight: bold;
+      color: #1a1a1a;
+    }
+
+    .nama-guru {
+      font-size: 12px;
+      color: #666666;
+      margin-top: 2px;
+    }
+
+    @media (min-width: 768px) {
+      .header-title h1 { font-size: 26px; }
+      .header-title p { font-size: 15px; }
+
+      .jadwal-container {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 1000px;
+        gap: 25px;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      .jadwal-container {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 1300px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <input type="checkbox" id="toggle-menu">
+
+  <div class="navbar">
+    <label for="toggle-menu" class="menu-icon">&#9776;</label>
+    <span class="nav-title">FNATIC CLASS</span>
+  </div>
+
+  <div class="sidebar">
+    <label for="toggle-menu" class="close-btn">&times;</label>
+    <ul class="sidebar-menu">
+      <li><a href="index.html">Beranda</a></li>
+      <li><a href="data-siswa.html">Data Siswa</a></li>
+      <li><a href="jadwal" class="active">Jadwal Pelajaran</a></li>
+      <li><a href="#">JADWAL PIKET</a></li>
+      <li><a href="struktur-kelas.html">Struktur Kelas</a></li>
+    </ul>
+  </div>
+
+  <div class="overlay"></div>
+
+  <div class="header-title">
+    <h1>DAFTAR MATA PELAJARAN KELAS XII F</h1>
+    <p>Jadwal Pelajaran Ter-Update</p>
+  </div>
+
+  <div class="jadwal-container">
+
+    <div class="day-card">
+      <span class="day-title">SENIN</span>
+      <div class="mapel-list">
+        <div class="mapel-item">
+          <div class="jam-badge">Jam 1</div>
+          <div class="nama-mapel">BIG</div>
+          <div class="nama-guru">H. Mukhamad Juremi, S.Pd</div>
+        </div>
+        <div class="mapel-item">
+          <div class="jam-badge">Jam 2 - 3</div>
+          <div class="nama-mapel">PAI</div>
+          <div class="nama-guru">Shofiana Mahmudah, S.Pd</div>
+        </div>
+        <div class="mapel-item">
+          <div class="jam-badge">Jam 4 - 5</div>
+          <div class="nama-mapel">FIS</div>
+          <div class="nama-guru">Ita Maeyana, S.Pd</div>
+        </div>
+        <div class="mapel-item">
+          <div class="jam-badge">Jam 6 - 7</div>
+          <div class="nama-mapel">BIO</div>
+          <div class="nama-guru">Rr. Berly LDLH., S.Pd</div>
+        </div>
+        <div class="mapel-item">
+          <div class="jam-badge">Jam 8 - 9</div>
+          <div class="nama-mapel">BIN</div>
+          <div class="nama-guru">Eri Sutatik, S.Pd</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <span class="day-title">SELASA</span>
+      <div class="mapel-list">
+        <div class="mapel-item">
+          <div class="jam-badge">Jam 1 - 2</div>
+          <div class="nama-mapel">PJOK-L</div>
+          <div class="nama-guru">Sigit Karyono, S.Pd</div>
+        </div>
+        <div class="mapel-item">
+          <div class="jam-badge">Jam 3 - 4</div>
+          <div class="nama-mapel">MTK</div>
+          <div class="nama-guru">Hj. Titin Indrawati, S.Pd</div>
+        </div>
+        <div class="mapel-item">
+          <div class="jam-badge">Jam 5 - 6</div>
+          <div class="nama-mapel">SBD</div>
+          <div class="nama-guru">Herman Setyo Pambudi, S.Sn</div>
+        </div>
+        <div class="mapel-item">
+          <div class="jam-badge">Jam 7 - 8</div>
+          <div class="nama-mapel">BIO</div>
+          <div class="nama-guru">Rr. Berly LDLH., S.Pd</div>
+        </div>
+        <div class="mapel-item">
+          <div class="jam-badge">Jam 9 - 10</div>
+          <div class="nama-mapel">MTK-TL</div>
+          <div class="nama-guru">Nancy Yunita Susanti, S.Pd, Gr.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <span class="day-title">RABU</span>
+      <div class="mapel-list">
+        <div class="mapel-item">
+          <div class="jam-badge">Jam 1 - 2</div>
+          <div class="nama-mapel">BIG</div>
+          <div class="nama-guru">H. Mukhamad Juremi, S.Pd</div>
+        </div>
+        <div class="mapel-item">
+          <div class="jam-badge">Jam 3 - 4</div>
+          <div class="nama-mapel">MTK</div>
+          <div class="nama-guru">Hj. Titin Indrawati, S.Pd</div>
+        </div>
+        <div class="mapel-item">
+          <div class="jam-badge">Jam 5 - 6</div>
+          <div class="nama-mapel">TKA</div>
+          <div class="nama-guru">Latihan TKA</div>
+        </div>
+        <div class="mapel-item">
+          <div class="jam-badge">Jam 7 - 8</div>
+          <div class="nama-mapel">ITK</div>
+          <div class="nama-guru">Muhammad Yusron Tri Abdillah., S.S.T</div>
+        </div>
+        <div class="mapel-item">
+          <div class="jam-badge">Jam 9</div>
+          <div class="nama-mapel">PJOK_KLS</div>
+          <div class="nama-guru">Sigit Karyono, S.Pd</div>
+        </div>
+        <div class="mapel-item">
+          <div class="jam-badge">Jam 10</div>
+          <div class="nama-mapel">BK</div>
+          <div class="nama-guru">Eni Sriwinanti, S.Psi</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <span class="day-title">KAMIS</span>
+      <div class="mapel-list">
+        <div class="mapel-item">
+          <div class="jam-badge">Jam 1 - 2</div>
+          <div class="nama-mapel">FIS</div>
+          <div class="nama-guru">Ita Maeyana, S.Pd</div>
+        </div>
+        <div class="mapel-item">
+          <div class="jam-badge">Jam 3 - 4</div>
+          <div class="nama-mapel">PKWU</div>
+          <div class="nama-guru">Ridwan Indrajaya, S.Pd</div>
+        </div>
+        <div class="mapel-item">
+          <div class="jam-badge">Jam 5 - 6</div>
+          <div class="nama-mapel">TKA</div>
+          <div class="nama-guru">Latihan TKA</div>
+        </div>
+        <div class="mapel-item">
+          <div class="jam-badge">Jam 7 - 8</div>
+          <div class="nama-mapel">ITK</div>
+          <div class="nama-guru">Muhammad Yusron Tri Abdillah., S.S.T</div>
+        </div>
+        <div class="mapel-item">
+          <div class="jam-badge">Jam 9 - 10</div>
+          <div class="nama-mapel">PP</div>
+          <div class="nama-guru">Hj. Nur Chayatun, S.Pd</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <span class="day-title">JUMAT</span>
+      <div class="mapel-list">
+        <div class="mapel-item">
+          <div class="jam-badge">Jam 1 - 2</div>
+          <div class="nama-mapel">BIN</div>
+          <div class="nama-guru">Eri Sutatik, S.Pd</div>
+        </div>
+        <div class="mapel-item">
+          <div class="jam-badge">Jam 3</div>
+          <div class="nama-mapel">PAI</div>
+          <div class="nama-guru">Shofiana Mahmudah, S.Pd</div>
+        </div>
+        <div class="mapel-item">
+          <div class="jam-badge">Jam 4</div>
+          <div class="nama-mapel">BSJ</div>
+          <div class="nama-guru">Bahasa Jawa</div>
+        </div>
+        <div class="mapel-item">
+          <div class="jam-badge">Jam 5 - 6</div>
+          <div class="nama-mapel">MTK-TL</div>
+          <div class="nama-guru">Nancy Yunita Susanti, S.Pd, Gr.</div>
+        </div>
+        <div class="mapel-item">
+          <div class="jam-badge">Jam 7 - 8</div>
+          <div class="nama-mapel">SJRH</div>
+          <div class="nama-guru">Indah Nursanti, S.Pd</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

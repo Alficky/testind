@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Siswa - FNATIC CLASS</title>
+    
+   <style>
+  /* Reset CSS agar tidak ada margin tersisa & layout pas di layar */
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    margin: 0;
+    background-color: #0047FF; 
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+  }
+
+  /* Navbar Header */
+  .navbar {
+    background-color: #000000;
+    color: #ffffff;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .menu-icon {
+    font-size: 22px;
+    cursor: pointer;
+  }
+
+  .nav-title {
+    font-weight: bold;
+    font-size: 15px;
+    text-transform: uppercase;
+  }
+
+  /* Sidebar Menu & Navigasi */
+  #toggle-menu {
+    display: none;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -260px;
+    width: 250px;
+    height: 100%;
+    background-color: #000000;
+    transition: left 0.3s ease;
+    z-index: 1000;
+    padding-top: 10px;
+  }
+
+  .close-btn {
+    color: #ffffff;
+    font-size: 28px;
+    padding: 10px 20px;
+    cursor: pointer;
+    display: inline-block;
+  }
+
+  .sidebar-menu {
+    list-style: none;
+    padding: 10px 0;
+  }
+
+  .sidebar-menu li a {
+    display: block;
+    padding: 14px 24px;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+  }
+
+  .sidebar-menu li a.active, 
+  .sidebar-menu li a:hover {
+    background-color: #1a1a1a;
+  }
+
+  /* Overlay Hitam */
+  .overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+  }
+
+  #toggle-menu:checked ~ .sidebar {
+    left: 0;
+  }
+
+  #toggle-menu:checked ~ .overlay {
+    display: block;
+  }
+
+  /* Judul / Elemen Header Data */
+  .data {
+    padding: 20px 15px 10px; 
+    color: white; 
+    text-align: center;
+    font-weight: bold;
+  }
+
+  /* ==========================================
+     SISTEM GRID RESPONSIF (HP -> LAPTOP L)
+  ========================================== */
+
+  /* 1. Tampilan Default / Layar HP */
+  .siswa-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 Kolom di HP */
+    gap: 12px;
+    padding: 15px;
+    width: 100%;
+    max-width: 1400px; /* Batas maksimum kontainer di layar sangat lebar */
+    margin: 0 auto;
+  }
+
+  .siswa-card {
+    background: #ffffff;
+    width: 100%;
+    border-radius: 12px;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .siswa-foto {
+    width: 100%;
+    aspect-ratio: 1 / 1; 
+    object-fit: cover;  
+    border-radius: 8px;
+    margin-bottom: 8px;
+  }
+
+  .nama {
+    font-size: 13px;
+    font-weight: bold;
+    color: #1a1a1a;
+    margin-bottom: 4px;
+  }
+
+  .detail-siswa {
+    font-size: 11px;
+    color: #555555;
+    line-height: 1.3;
+  }
+
+  /* 2. Tampilan Tablet (Layar ≥ 600px) */
+  @media (min-width: 600px) {
+    .siswa-container {
+      grid-template-columns: repeat(3, 1fr); /* 3 Kolom */
+      gap: 15px;
+      padding: 20px;
+    }
+
+    .nama {
+      font-size: 14px;
+    }
+  }
+
+  /* 3. Tampilan Laptop / Desktop Standard (Layar ≥ 900px) */
+  @media (min-width: 900px) {
+    .siswa-container {
+      grid-template-columns: repeat(4, 1fr); /* 4 Kolom */
+      gap: 18px;
+    }
+
+    .siswa-card {
+      padding: 14px;
+    }
+
+    .nama {
+      font-size: 15px;
+    }
+
+    .detail-siswa {
+      font-size: 12px;
+    }
+  }
+
+  /* 4. Tampilan Laptop L / Monitor Besar (Layar ≥ 1200px) */
+  @media (min-width: 1200px) {
+    .siswa-container {
+      grid-template-columns: repeat(5, 1fr); /* 5 Kolom Lebar */
+      gap: 20px;
+    }
+
+    .siswa-card {
+      padding: 16px;
+    }
+
+    .nama {
+      font-size: 16px;
+    }
+
+    .detail-siswa {
+      font-size: 13px;
+    }
+  }
+</style>
+
+</head>
+<body>
+
+    <input type="checkbox" id="toggle-menu">
+
+    <nav class="navbar">
+        <label for="toggle-menu" class="menu-icon">&#9776;</label>
+        <span class="nav-title">FNATIC CLASS</span>
+    </nav>
+  
+    <label for="toggle-menu" class="overlay"></label>
+
+    <div class="sidebar">
+        <label for="toggle-menu" class="close-btn">&times;</label>
+        <ul class="sidebar-menu">
+            <li><a href="index.html">BERANDA</a></li>
+            <li><a href="data-siswa.html" class="active">DATA SISWA</a></li>
+            <li><a href="#">MATA PELAJARAN</a></li>
+            <li><a href="#">JADWAL PIKET</a></li>
+            <li><a href="struktur-kelas">STRUKTUR KELAS</a></li>
+        </ul>
+    </div>
+  
+    <div class="data">
+        <h2>DATA SISWA KELAS 12F</h2>
+        <p>Daftar nama siswa akan ditampilkan di sini.</p>
+    </div>
+  <div class="siswa-container">
+
+    <div class="siswa-card">
+        <img src="foto/ando.JPG" alt="Foto Siswa" class="siswa-foto">
+        <div class="nama">ADLY ASADUN ZUFAR DHAFIR TSABIT</div>
+        <div class="detail-siswa">No. Absen: 1</div>
+        <div class="detail-siswa">NIS: 10384</div>
+        <div class="detail-siswa">NISN: 0082634126</div>
+    </div>
+
+    <div class="siswa-card">
+        <img src="foto/akbar m.JPG" alt="Foto Siswa" class="siswa-foto">
+        <div class="nama">AHMAD AKBAR MAULANA</div>
+        <div class="detail-siswa">No. Absen: 2</div>
+        <div class="detail-siswa">NIS: 10354</div>
+        <div class="detail-siswa">NISN: 0097431552</div>
+    </div>
+  
+    <div class="siswa-card">
+        <img src="foto/ridan.JPG" alt="Foto Siswa" class="siswa-foto">
+        <div class="nama">ALIF GHANIS SHERIDAN</div>
+        <div class="detail-siswa">No. Absen: 3</div>
+        <div class="detail-siswa">NIS: 10280</div>
+        <div class="detail-siswa">NISN: 0091398326</div>
+    </div>
+
+    <div class="siswa-card">
+        <img src="foto/amar.JPG" alt="Foto Siswa" class="siswa-foto">
+        <div class="nama">AMAR RIDHO SAPUTRA</div>
+        <div class="detail-siswa">No. Absen: 4</div>
+        <div class="detail-siswa">NIS: 10281</div>
+        <div class="detail-siswa">NISN: 0086364015</div>
+    </div>
+
+    <div class="siswa-card">
+        <img src="foto/aqira.JPG" alt="Foto Siswa" class="siswa-foto">
+        <div class="nama">AQIRA DHIA SYARAFANA</div>
+        <div class="detail-siswa">No. Absen: 5</div>
+        <div class="detail-siswa">NIS: 10527</div>
+        <div class="detail-siswa">NISN: 0091651874</div>
+    </div>
+
+    <div class="siswa-card">
+        <img src="foto/arham.JPG" alt="Foto Siswa" class="siswa-foto">
+        <div class="nama">ARHAM ARRAFI RIESTANDIO</div>
+        <div class="detail-siswa">No. Absen: 6</div>
+        <div class="detail-siswa">NIS: 10209</div>
+        <div class="detail-siswa">NISN: 0094936356</div>
+    </div>
+
+    <div class="siswa-card">
+        <img src="foto/arum.JPG" alt="Foto Siswa" class="siswa-foto">
+        <div class="nama">ARUM DANUARTA</div>
+        <div class="detail-siswa">No. Absen: 7</div>
+        <div class="detail-siswa">NIS: 10458</div>
+        <div class="detail-siswa">NISN: 0099518108</div>
+    </div>
+
+    <div class="siswa-card">
+        <img src="foto/avicena.JPG" alt="Foto Siswa" class="siswa-foto">
+        <div class="nama">AVICENA AURORA AZRA</div>
+        <div class="detail-siswa">No. Absen: 8</div>
+        <div class="detail-siswa">NIS: 10426</div>
+        <div class="detail-siswa">NISN: 0096486748</div>
+    </div>
+
+    <div class="siswa-card">
+        <img src="foto/berlian.JPG" alt="Foto Siswa" class="siswa-foto">
+        <div class="nama">BERLIAN ADIWIJAYA SINDHU</div>
+        <div class="detail-siswa">No. Absen: 9</div>
+        <div class="detail-siswa">NIS: 10318</div>
+        <div class="detail-siswa">NISN: 0097386721</div>
+    </div>
+
+    <div class="siswa-card">
+        <img src="foto/bryan.JPG" alt="Foto Siswa" class="siswa-foto">
+        <div class="nama">BRYAN PANDU AJI</div>
+        <div class="detail-siswa">No. Absen: 10</div>
+        <div class="detail-siswa">NIS: 10391</div>
+        <div class="detail-siswa">NISN: 0085263156</div>
+    </div>
+
+    <div class="siswa-card">
+        <img src="foto/calista.JPG" alt="Foto Siswa" class="siswa-foto">
+        <div class="nama">CALISTA ATHALIAH NAFIDZA</div>
+        <div class="detail-siswa">No. Absen: 11</div>
+        <div class="detail-siswa">NIS: 10319</div>
+        <div class="detail-siswa">NISN: 0098466112</div>
+    </div>
+
+    <div class="siswa-card">
+        <img src="foto/david.JPG" alt="Foto Siswa" class="siswa-foto">
+        <div class="nama">DAVID TRI ANDIKA</div>
+        <div class="detail-siswa">No. Absen: 12</div>
+        <div class="detail-siswa">NIS: 10393</div>
+        <div class="detail-siswa">NISN: 0092492767</div>
+    </div>
+
+    <div class="siswa-card">
+        <img src="foto/difva.JPG" alt="Foto Siswa" class="siswa-foto">
+        <div class="nama">DIFVA ROSSALIA SARI</div>
+        <div class="detail-siswa">No. Absen: 13</div>
+        <div class="detail-siswa">NIS: 10254</div>
+        <div class="detail-siswa">NISN: 0085072554</div>
+    </div>
+
+    <div class="siswa-card">
+        <img src="foto/dika.JPG" alt="Foto Siswa" class="siswa-foto">
+        <div class="nama">Dika Dwi Ardiyanto</div>
+        <div class="detail-siswa">No. Absen: 14</div>
+        <div class="detail-siswa">NIS: 10531</div>
+        <div class="detail-siswa">NISN: 0091877263</div>
+    </div>
+
+    <div class="siswa-card">
+        <img src="" alt="foto/ed.JPG" class="siswa-foto">
+        <div class="nama">EDWIND BIMANTARA RAKHASIWI</div>
+        <div class="detail-siswa">No. Absen: 15</div>
+        <div class="detail-siswa">NIS: 10394</div>
+        <div class="detail-siswa">NISN: 0095701465</div>
+    </div>
+
+    <div class="siswa-card">
+        <img src="foto/erin.JPG" alt="Foto Siswa" class="siswa-foto">
+        <div class="nama">Erin Dwi Wahyuni</div>
+        <div class="detail-siswa">No. Absen: 16</div>
+        <div class="detail-siswa">NIS: 10217</div>
+        <div class="detail-siswa">NISN: 0098146001</div>
+    </div>
+
+
+    <div class="siswa-card">
+        <img src="foto/f.JPG" alt="Foto Siswa" class="siswa-foto">
+        <div class="nama">F Saiful Rizal</div>
+        <div class="detail-siswa">No. Absen: 17</div>
+        <div class="detail-siswa">NIS: 10532</div>
+        <div class="detail-siswa">NISN: 0092670831</div>
+    </div>
+
+    <div class="siswa-card">
+        <img src="foto/ivain.JPG" alt="Foto Siswa" class="siswa-foto">
+        <div class="nama">IVAIN SYADIDDA HUBBA</div>
+        <div class="detail-siswa">No. Absen: 18</div>
+        <div class="detail-siswa">NIS: 10539</div>
+        <div class="detail-siswa">NISN: 0088297471</div>
+    </div>
+
+    <div class="siswa-card">
+        <img src="foto/rio.JPG" alt="Foto Siswa" class="siswa-foto">
+        <div class="nama">M. RIO DARMAWAN</div>
+        <div class="detail-siswa">No. Absen: 19</div>
+        <div class="detail-siswa">NIS: 10224</div>
+        <div class="detail-siswa">NISN: 0081516480</div>
+    </div>
+
+    <div class="siswa-card">
+        <img src="foto/akbarw.JPG" alt="Foto Siswa" class="siswa-foto">
+        <div class="nama">MOH AKBAR WARDANA</div>
+        <div class="detail-siswa">No. Absen: 20</div>
+        <div class="detail-siswa">NIS: 10403</div>
+        <div class="detail-siswa">NISN: 0082393409</div>
+    </div>
+    
+    <div class="siswa-card">
+        <img src="foto/riva.JPG" alt="Foto Siswa" class="siswa-foto">
+        <div class="nama">MOH RIVA AGUSTIAN</div>
+        <div class="detail-siswa">No. Absen: 21</div>
+        <div class="detail-siswa">NIS: 10331</div>
+        <div class="detail-siswa">NISN: 0089119128</div>
+    </div>
+
+    <div class="siswa-card">
+        <img src="foto/fikri.JPG" alt="Foto Siswa" class="siswa-foto">
+        <div class="nama">Muhammad Ainul Fikri</div>
+        <div class="detail-siswa">No. Absen: 22</div>
+        <div class="detail-siswa">NIS: 10332</div>
+        <div class="detail-siswa">NISN: 0085231612</div>
+    </div>
+
+    <div class="siswa-card">
+        <img src="foto/aku.JPG" alt="Foto Siswa" class="siswa-foto">
+        <div class="nama">MUHAMMAD AQSHO FICKY ALDIANSYAH</div>
+        <div class="detail-siswa">No. Absen: 23</div>
+        <div class="detail-siswa">NIS: 10405</div>
+        <div class="detail-siswa">NISN: 0093724697</div>
+    </div>
+
+    <div class="siswa-card">
+        <img src="foto/izul.JPG" alt="Foto Siswa" class="siswa-foto">
+        <div class="nama">Muhammad Hifdhon Zulfa</div>
+        <div class="detail-siswa">No. Absen: 24</div>
+        <div class="detail-siswa">NIS: 10509</div>
+        <div class="detail-siswa">NISN: 0099743384</div>
+    </div>
+
+    <div class="siswa-card">
+        <img src="foto/raya.JPG" alt="Foto Siswa" class="siswa-foto">
+        <div class="nama">MUHAMMAD RAYA KASYAFANI</div>
+        <div class="detail-siswa">No. Absen: 25</div>
+        <div class="detail-siswa">NIS: 10406</div>
+        <div class="detail-siswa">NISN: 0159804475</div>
+    </div>
+
+    <div class="siswa-card">
+        <img src="foto/topek.JPG" alt="Foto Siswa" class="siswa-foto">
+        <div class="nama">Muhammad Taufik Qurrohman</div>
+        <div class="detail-siswa">No. Absen: 26</div>
+        <div class="detail-siswa">NIS: 10545</div>
+        <div class="detail-siswa">NISN: 0085301550</div>
+    </div>
+
+    <div class="siswa-card">
+        <img src="foto/rendi.JPG" alt="Foto Siswa" class="siswa-foto">
+        <div class="nama">Rendi Nur Riski</div>
+        <div class="detail-siswa">No. Absen: 27</div>
+        <div class="detail-siswa">NIS: 10340</div>
+        <div class="detail-siswa">NISN: 0083456349</div>
+    </div>
+
+    <div class="siswa-card">
+        <img src="foto/jeje.JPG" alt="Foto Siswa" class="siswa-foto">
+        <div class="nama">RIZKY AMALIA FAJRINA</div>
+        <div class="detail-siswa">No. Absen: 28</div>
+        <div class="detail-siswa">NIS: 10550</div>
+        <div class="detail-siswa">NISN: 0107457445</div>
+    </div>
+
+    <div class="siswa-card">
+        <img src="foto/septi.JPG" alt="Foto Siswa" class="siswa-foto">
+        <div class="nama">SEPTI WULAN RAMADHANI</div>
+        <div class="detail-siswa">No. Absen: 29</div>
+        <div class="detail-siswa">NIS: 10273</div>
+        <div class="detail-siswa">NISN: 0081283455</div>
+    </div>
+
+    <div class="siswa-card">
+        <img src="foto/seyla.JPG" alt="Foto Siswa" class="siswa-foto">
+        <div class="nama">SEYLA NADZIFATUS ZAHRA</div>
+        <div class="detail-siswa">No. Absen: 30</div>
+        <div class="detail-siswa">NIS: 10381</div>
+        <div class="detail-siswa">NISN: 0093498285</div>
+    </div>
+
+    <div class="siswa-card">
+        <img src="foto/rama.JPG" alt="Foto Siswa" class="siswa-foto">
+        <div class="nama">SOFWAN NUR RAMADHANI</div>
+        <div class="detail-siswa">No. Absen: 31</div>
+        <div class="detail-siswa">NIS: 10519</div>
+        <div class="detail-siswa">NISN: 0083095121</div>
+    </div>
+
+  
+    <div class="siswa-card">
+        <img src="foto/yovin.JPG" alt="Foto Siswa" class="siswa-foto">
+        <div class="nama">Yovin Enofitra Winarto</div>
+        <div class="detail-siswa">No. Absen: 32</div>
+        <div class="detail-siswa">NIS: 10418</div>
+        <div class="detail-siswa">NISN: 0083922184</div>
+    </div>
+
+    <div class="siswa-card">
+        <img src="foto/zahra.JPG" alt="Foto Siswa" class="siswa-foto">
+        <div class="nama">ZAHRA AINUN JANNAH</div>
+        <div class="detail-siswa">No. Absen: 33</div>
+        <div class="detail-siswa">NIS: 10419</div>
+        <div class="detail-siswa">NISN: 0097283449</div>
+    </div>
+
+    <div class="siswa-card">
+        <img src="foto/gavi.JPG" alt="Foto Siswa" class="siswa-foto">
+        <div class="nama">ZAHRAN TAJUSSALATIN GAVRILLA</div>
+        <div class="detail-siswa">No. Absen: 34</div>
+        <div class="detail-siswa">NIS: 10239</div>
+        <div class="detail-siswa">NISN: 0091621203</div>
+    </div>
+
+    <div class="siswa-card">
+        <img src="foto/zahrotun.JPG" alt="Foto Siswa" class="siswa-foto">
+        <div class="nama">ZAHROTUN SYIFA</div>
+        <div class="detail-siswa">No. Absen: 35</div>
+        <div class="detail-siswa">NIS: 10453</div>
+        <div class="detail-siswa">NISN: 0099610028</div>
+    </div>
+
+</div>
+
+</body>
+</html>

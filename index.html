@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- 1. Import font Poppins dari Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+  /* Reset CSS */
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background-color: #0d37e6;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+  }
+
+  /* Navbar */
+  .navbar {
+    background-color: #000000;
+    color: #ffffff;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .menu-icon {
+    font-size: 22px;
+    cursor: pointer;
+  }
+
+  .nav-title {
+    font-weight: bold;
+    font-size: 15px;
+    text-transform: uppercase;
+  }
+
+  /* Sidebar Menu */
+  #toggle-menu {
+    display: none;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -260px;
+    width: 220px;
+    height: 100%;
+    background-color: #000000;
+    transition: left 0.3s ease;
+    z-index: 1000;
+    padding-top: 10px;
+  }
+
+  .close-btn {
+    color: #ffffff;
+    font-size: 28px;
+    padding: 10px 20px;
+    cursor: pointer;
+    display: inline-block;
+  }
+
+  .sidebar-menu {
+    list-style: none;
+    padding: 10px 0;
+  }
+
+  .sidebar-menu li a {
+    display: block;
+    padding: 14px 24px;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+  }
+
+  .sidebar-menu li a.active, 
+  .sidebar-menu li a:hover {
+    background-color: #1a1a1a;
+  }
+
+  .overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+  }
+
+  #toggle-menu:checked ~ .sidebar {
+    left: 0;
+  }
+
+  #toggle-menu:checked ~ .overlay {
+    display: block;
+  }
+
+  /* ==========================================
+     TAMPILAN DEFAULT / HP (LAYAR KECIL)
+  ========================================== */
+  
+  .banner-container,
+  .box,
+  h2,
+  .info-tugas {
+    width: 90%;
+    max-width: 480px; /* Batas lebar untuk HP */
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Banner Slider */
+  .banner-container {
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+
+  .banner-slider {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory; 
+    scroll-behavior: smooth;
+    gap: 10px; 
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .banner-foto {
+    flex: 0 0 100%;            
+    scroll-snap-align: center;  
+    width: 100%;            
+    aspect-ratio: 1.85 / 1;   
+    object-fit: cover;       
+    border-radius: 12px;     
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3); 
+    display: block;
+  }
+
+  /* Box Teks Nama Kelas */
+  .box {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 20px 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+
+  h1 {
+    font-weight: bold;            
+    text-align: center;
+    color: #000000;                 
+    margin-bottom: 4px;
+    font-size: 24px;
+  }
+
+  .Bawah {
+    color: #000000;
+    text-align: center;
+    font-weight: bold;
+    font-size: 13px;
+  }
+
+  /* Subtitle Judul */
+  h2 {
+    font-family: 'Poppins', sans-serif; 
+    font-weight: bold;                   
+    text-align: left;
+    color: #ffffff;                  
+    font-size: 18px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+
+  /* Box List Info Tugas */
+  .info-tugas {
+    font-family: Arial, sans-serif;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: bold;
+    background: #000000;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    text-align: left;
+    margin-bottom: 30px;
+  }
+
+
+  /* ==========================================
+     TAMPILAN LAPTOP / DESKTOP (LAYAR BESAR)
+  ========================================== */
+  @media (min-width: 768px) {
+    .banner-container,
+    .box,
+    h2,
+    .info-tugas {
+      max-width: 900px; /* Mengembang lebar di Laptop */
+    }
+
+    h1 {
+      font-size: 32px; /* Ukuran font lebih besar di PC */
+    }
+
+    .Bawah {
+      font-size: 16px;
+    }
+
+    h2 {
+      font-size: 22px;
+    }
+
+    .info-tugas {
+      font-size: 16px;
+      padding: 30px;
+    }
+  }
+</style>
+
+</head>
+<body>
+   
+<input type="checkbox" id="toggle-menu">
+<nav class="navbar">
+    <label for="toggle-menu" class="menu-icon">&#9776;</label>
+    <span class="nav-title">FNATIC CLASS</span>
+</nav>
+<label for="toggle-menu" class="overlay"></label>
+
+<div class="sidebar">
+    <label for="toggle-menu" class="close-btn">&times;</label>
+    <ul class="sidebar-menu">
+        <li><a href="#" class="active">BERANDA</a></li>
+        <li><a href="data-siswa.html">DATA SISWA</a></li>
+        <li><a href="#">MATA PELAJARAN</a></li>
+        <li><a href="#">JADWAL PIKET</a></li>
+        <li><a href="struktur-kelas.html">STRUKTUR KELAS</a></li>
+    </ul>
+</div>
+<div class="banner-container">
+  <div class="banner-slider"> 
+    <img src="https://files.catbox.moe/ym889h.jpg" alt="Foto Kelas 1" class="banner-foto">
+    <img src="https://files.catbox.moe/kc7sam.jpg" alt="Foto Kelas 2" class="banner-foto">
+    <img src="https://files.catbox.moe/30rttp.JPG" alt="Foto Kelas 3" class="banner-foto">
+  </div>
+  </div>
+  <div class="box">
+      <h1>FNATIC</h1>
+  <div class="Bawah">KELAS 12F SMA NEGERI 2 TANGGUL</div>
+  </div>
+  <header>
+    <h2>INFO TUGAS TER-UPDATE</h2>
+    <div class="info-tugas"
+    <ul>
+      <li><span>INFORMATIKA : MEMBUAT WEBSITE</span></li>
+      <li><span>LATIHAN TKA (SESUAI JADWAL)</span></li>
+      <li><span>FISIKA MENGERJAKAN ASSESMEN FORMATIF 3</span></li>
+    </ul>
+    </div>
+  </header>
+</body>
+</html>

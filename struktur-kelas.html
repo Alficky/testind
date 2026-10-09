@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Siswa - FNATIC CLASS</title>
+    
+  <style>
+  /* Reset CSS dasar agar ukuran elemen pas dan tidak meluber */
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background-color: #0047FF; 
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+  }
+
+  /* Navbar Atas */
+  .navbar {
+    background-color: #000000;
+    color: #ffffff;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .menu-icon {
+    font-size: 22px;
+    cursor: pointer;
+  }
+
+  .nav-title {
+    font-weight: bold;
+    font-size: 15px;
+    text-transform: uppercase;
+  }
+
+  /* Sidebar Menu & Overlay */
+  #toggle-menu {
+    display: none;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -260px;
+    width: 250px;
+    height: 100%;
+    background-color: #000000;
+    transition: left 0.3s ease;
+    z-index: 1000;
+    padding-top: 10px;
+  }
+
+  .close-btn {
+    color: #ffffff;
+    font-size: 28px;
+    padding: 10px 20px;
+    cursor: pointer;
+    display: inline-block;
+  }
+
+  .sidebar-menu {
+    list-style: none;
+    padding: 10px 0;
+  }
+
+  .sidebar-menu li a {
+    display: block;
+    padding: 14px 24px;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+  }
+
+  .sidebar-menu li a.active, 
+  .sidebar-menu li a:hover {
+    background-color: #1a1a1a;
+  }
+
+  /* Overlay Hitam Transparan saat Sidebar Terbuka */
+  .overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+  }
+
+  #toggle-menu:checked ~ .sidebar {
+    left: 0;
+  }
+
+  #toggle-menu:checked ~ .overlay {
+    display: block;
+  }
+
+  /* Area Konten / Header Data */
+  .data {
+    padding: 20px 15px; 
+    color: #ffffff; 
+    text-align: center;
+    font-weight: bold;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* ==========================================
+     STRUKTUR ORGANISASI (TAMPILAN HP)
+  ========================================== */
+  .struktur-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 Kolom */
+    gap: 15px;
+    padding: 15px 10px;
+    width: 100%;
+    max-width: 500px; /* Lebar ideal di layar HP */
+    margin: 0 auto;
+  }
+
+  .struktur-card {
+    background: #ffffff;
+    width: 100%;
+    border-radius: 16px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Wali Kelas / Pembina (2 Kolom Penuh di Tengah) */
+  .struktur-card.full-width {
+    grid-column: span 2;
+    max-width: 260px;
+    justify-self: center;
+  }
+
+  .struktur-foto {
+    width: 100%;
+    aspect-ratio: 1 / 1; 
+    object-fit: cover;  
+    border-radius: 12px;
+    margin-bottom: 12px;
+  }
+
+  .jabatan {
+    font-size: 11px;
+    font-weight: bold;
+    color: #0047FF;      
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+
+  .nama {
+    font-size: 14px;
+    font-weight: bold;
+    color: #1a1a1a;
+  }
+
+  /* ==========================================
+     PENYESUAIAN UNTUK LAPTOP / LAYAR BESAR
+  ========================================== */
+  @media (min-width: 768px) {
+    .navbar {
+      padding: 16px 40px;
+    }
+
+    .nav-title {
+      font-size: 18px;
+    }
+
+    .data {
+      padding: 30px 20px;
+      font-size: 18px;
+    }
+
+    /* Struktur Organisasi Mengembang di Laptop */
+    .struktur-container {
+      max-width: 800px; /* Lebih lebar di laptop agar kartu tidak kekecilan */
+      gap: 25px;
+      padding: 30px 20px;
+    }
+
+    .struktur-card {
+      padding: 24px;
+    }
+
+    .struktur-card.full-width {
+      max-width: 320px; /* Ukuran kartu Wali Kelas disesuaikan di laptop */
+    }
+
+    .jabatan {
+      font-size: 13px;
+    }
+
+    .nama {
+      font-size: 18px; /* Teks nama lebih tegas di layar besar */
+    }
+  }
+</style>
+
+</head>
+<body>
+
+    <input type="checkbox" id="toggle-menu">
+
+    <nav class="navbar">
+        <label for="toggle-menu" class="menu-icon">&#9776;</label>
+        <span class="nav-title">FNATIC CLASS</span>
+    </nav>
+  
+    <label for="toggle-menu" class="overlay"></label>
+
+    <div class="sidebar">
+        <label for="toggle-menu" class="close-btn">&times;</label>
+        <ul class="sidebar-menu">
+            <li><a href="index.html">BERANDA</a></li>
+            <li><a href="data-siswa.html" class="active">DATA SISWA</a></li>
+            <li><a href="#">MATA PELAJARAN</a></li>
+            <li><a href="#">JADWAL PIKET</a></li>
+            <li><a href="#">STRUKTUR KELAS</a></li>
+        </ul>
+    </div>
+  
+    <div class="data">
+        <h2>DATA SISWA KELAS 12F</h2>
+        <p>Daftar nama siswa akan ditampilkan di sini.</p>
+    </div>
+  <div class="struktur-container">
+    
+    <!-- Kartu Wali Kelas (Sendirian di Atas) -->
+    <div class="struktur-card full-width">
+        <img src="foto/indah.png" alt="Foto Wali Kelas" class="struktur-foto">
+        <div class="jabatan">WALI KELAS</div>
+        <div class="nama">Indah Nursanti, S.Pd.</div>
+    </div>
+
+    <!-- Kartu Ketua Kelas & Wakil -->
+    <div class="struktur-card">
+        <img src="foto/rama.JPG" alt="Foto Ketua Kelas" class="struktur-foto">
+        <div class="jabatan">KETUA KELAS</div>
+        <div class="nama">Sofwan Nur Ramadhani</div>
+    </div>
+   
+    <div class="struktur-card">
+        <img src="foto/raya.JPG" alt="Foto Wakil Ketua Kelas" class="struktur-foto">
+        <div class="jabatan">WAKIL KETUA KELAS</div>
+        <div class="nama">M RAYA KASYAFANI</div>
+    </div>
+
+    <!-- Kartu Sekretaris 1 & 2 -->
+    <div class="struktur-card">
+        <img src="foto/arum.JPG" alt="Foto Sekretaris 1" class="struktur-foto">
+        <div class="jabatan">SEKRETARIS 1</div>
+        <div class="nama">ARUM DANUARTA</div>
+    </div>
+
+    <div class="struktur-card">
+        <img src="foto/seyla.JPG" alt="Foto Sekretaris 2" class="struktur-foto">
+        <div class="jabatan">SEKRETARIS 2</div>
+        <div class="nama">SEYLA NADZIFATUS ZAHRA</div>
+    </div>
+
+    <!-- Kartu Bendahara 1 & 2 -->
+    <div class="struktur-card">
+        <img src="foto/calista.JPG" alt="Foto Bendahara 1" class="struktur-foto">
+        <div class="jabatan">BENDAHARA 1</div>
+        <div class="nama">CALISTA ATHALIAH NAFIDZA</div>
+    </div>
+
+    <div class="struktur-card">
+        <img src="foto/jeje.JPG" alt="Foto Bendahara 2" class="struktur-foto">
+        <div class="jabatan">BENDAHARA 2</div>
+        <div class="nama">RIZKY AMALIA FAJRINA</div>
+    </div>
+
+</div>
+
+</body>
+</html>
